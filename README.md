@@ -1,1 +1,2 @@
-# SW_algorithm
+# SW_algorithm STUDY
+- Suyeon Jin & Heesoo Jeon

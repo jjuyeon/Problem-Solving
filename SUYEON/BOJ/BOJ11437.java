@@ -9,7 +9,7 @@ import java.io.*;
 // 4. 같아지는 순간 종료 -> LCA
 // https://hoho325.tistory.com/103
 
-public class BOJ11437 {
+public class BOJ11437 { // LCA naive version
     static ArrayList<ArrayList<Integer>> tree;
     static ArrayList<Integer> answer;
 

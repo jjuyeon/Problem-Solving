@@ -57,6 +57,14 @@ public class BOJ2042 { // segment tree
             update(2*node+1, mid+1, end, idx, diff); // right에 idx가 영향을 끼치는 노드 있는지 확인
         }
     }
+//    public static long update(int node, int start, int end, int idx, long diff){ // tree 만들 때처럼 리프노드부터 만들어서 올라가면서 업데이트
+//        if(!(start <= idx && idx <= end)) return tree[node];
+//
+//        if(start == end) return tree[node] = diff;
+//
+//        int mid = (start + end) / 2;
+//        return tree[node] = update(2*node, start, mid, idx, diff) + update(2*node+1, mid+1, end, idx, diff);
+//    }
 
     public static long sum(int node, int start, int end, int left, int right){ // left~right까지의 합을 구하는 함수
         if(left > end || right < start) return 0; // [left~right]구간이 [start~end]구간과 겹치지 않음

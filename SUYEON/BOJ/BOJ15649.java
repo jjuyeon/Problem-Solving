@@ -1,7 +1,9 @@
+package BOJ;
+
 import java.io.*;
 import java.util.*;
 
-public class BOJ15649 {
+public class BOJ15649 { // 중복없는 순열
     static boolean[] visited;
     static int[] answer;
 
@@ -13,10 +15,10 @@ public class BOJ15649 {
         visited = new boolean[n+1];
         answer = new int[n+1];
 
-        dfs(n,m,0);
+        permutation(n,m,0);
     }
 
-    public static void dfs(int n, int m, int count){
+    public static void permutation(int n, int m, int count){
         if(m == count){
             for(int i=0; i<m; i++)
                 System.out.print(answer[i] + " ");
@@ -28,7 +30,7 @@ public class BOJ15649 {
             if(!visited[i]){
                 visited[i] = true;
                 answer[count] = i;
-                dfs(n,m,count+1);
+                permutation(n,m,count+1);
                 visited[i] = false;
             }
         }

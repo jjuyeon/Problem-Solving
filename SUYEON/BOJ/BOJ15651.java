@@ -1,7 +1,9 @@
+package BOJ;
+
 import java.util.*;
 import java.io.*;
 
-public class BOJ15651 {
+public class BOJ15651 { // 중복있는 순열
     static StringBuilder sb = new StringBuilder();
     static int[] answer;
 
@@ -12,11 +14,11 @@ public class BOJ15651 {
         int m = Integer.parseInt(st.nextToken());
 
         answer = new int[n+1];
-        dfs(n,m,0);
+        permutation(n,m,0);
         System.out.print(sb.toString());
     }
 
-    public static void dfs(int n, int m, int count){
+    public static void permutation(int n, int m, int count){
         if(m == count){
             for(int i=0; i<m; i++)
                 sb.append(answer[i]).append(" ");
@@ -25,7 +27,7 @@ public class BOJ15651 {
         }
         for(int i=1; i<=n; i++){
             answer[count] = i;
-            dfs(n,m,count+1);
+            permutation(n,m,count+1);
         }
     }
 }

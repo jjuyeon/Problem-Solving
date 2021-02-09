@@ -16,8 +16,9 @@ public class BOJ1158 {
             queue.add(i);
         }
 
-        int cnt = 1;
+        int cnt = 0;
         while(queue.size() > 1){
+            cnt++; // 한 턴 시작
             if(cnt == k) {
                 sb.append(queue.poll()).append(", ");
                 cnt = 0;
@@ -25,7 +26,6 @@ public class BOJ1158 {
             else {
                 queue.add(queue.poll());
             }
-            cnt++; // 한 턴 끝남
         }
         sb.append(queue.poll());
 

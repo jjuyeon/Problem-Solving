@@ -44,17 +44,33 @@ public class BOJ1260 {
     }
 
     // 큐
+//    static void bfs(int vertex){
+//        Queue<Integer> queue = new LinkedList<>();
+//        queue.offer(vertex);
+//
+//        while(!queue.isEmpty()){
+//            int nowV = queue.poll();
+//            if(!visited[nowV]) {
+//                visited[nowV] = true; // 이렇게 하면 안됨, 값이 커지면 큐가 터짐
+//                sb.append(nowV).append(" ");
+//                for (int v : vertexList[nowV]) {
+//                    queue.offer(v);
+//                }
+//            }
+//        }
+//    }
+
     static void bfs(int vertex){
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(vertex);
-
+        visited[vertex] = true; // 이렇게 큐에 넣었을 때 바로 visited값을 true로 업데이트해줘야함
         while(!queue.isEmpty()){
             int nowV = queue.poll();
-            if(!visited[nowV]) {
-                visited[nowV] = true;
-                sb.append(nowV).append(" ");
-                for (int v : vertexList[nowV]) {
+            sb.append(nowV).append(" ");
+            for(int v : vertexList[nowV]){
+                if(!visited[v]){
                     queue.offer(v);
+                    visited[v] = true; // 이렇게 큐에 넣었을 때 바로 visited값을 true로 업데이트해줘야함
                 }
             }
         }

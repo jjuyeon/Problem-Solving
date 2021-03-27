@@ -3,6 +3,9 @@ package BOJ;
 import java.io.*;
 import java.util.*;
 
+// 개선방법: https://www.acmicpc.net/board/view/48643
+// 이렇게 바꾸면 2516ms -> 584ms로 최적화 가능
+
 public class BOJ17143 {
 
     static class Shark{
@@ -30,7 +33,18 @@ public class BOJ17143 {
         map = new Shark[r+1][c+1];
         for(int i=0; i<m; i++){
             st = new StringTokenizer(br.readLine());
-            map[stoi(st.nextToken())][stoi(st.nextToken())] = new Shark(stoi(st.nextToken()), stoi(st.nextToken()), stoi(st.nextToken()));
+            int row = stoi(st.nextToken());
+            int col = stoi(st.nextToken());
+            int speed = stoi(st.nextToken());
+            int dir = stoi(st.nextToken());
+            int size = stoi(st.nextToken());
+            if(dir == 1 || dir == 2) {
+                speed %= (2*r - 2);
+            }
+            else {
+                speed %= (2*c - 2);
+            }
+            map[row][col] = new Shark(speed, dir, size);
         }
 
         simulation();

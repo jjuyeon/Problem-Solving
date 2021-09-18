@@ -1,97 +1,90 @@
 package BOJ;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.Scanner;
 
 public class BOJ4179 {
 
-    static int[][] map, visited;
-    static int[] dx = {-1, 0, 1, 0};
-    static int[] dy = {0, 1, 0, -1};
+    static int R, C;
+    static int[][] arr;
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
 
-    static class Node {
-        int x, y;
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        R = Integer.parseInt(sc.next());
+        C = Integer.parseInt(sc.next());
 
-        public Node(int y, int x) {
-            this.x = x;
-            this.y = y;
-        }
-    }
-
-    public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-        int r = Integer.parseInt(st.nextToken());
-        int c = Integer.parseInt(st.nextToken());
-
-        map = new int[r][c];
-        visited = new int[r][c];
-
-        Queue<Node> jq = new LinkedList<>();
-        Queue<Node> fq = new LinkedList<>();
-
-        for (int i = 0; i < r; i++) {
-            String line = br.readLine();
-            for (int j = 0; j < c; j++) {
-                char temp = line.charAt(j);
-                if (temp == '#') {
-                    map[i][j] = -1;
-                } else if (temp == 'J') {
-                    map[i][j] = 1;
-                    jq.add(new Node(i, j));
-                } else if (temp == 'F') {
-                    map[i][j] = -2;
-                    fq.add(new Node(i, j));
-                } else {
-                    map[i][j] = 0;
+        Queue<int[]> fq = new LinkedList<>();
+        Queue<int[]> jq = new LinkedList<>();
+        arr = new int[R][C];
+        for (int i = 0; i < R; i++) {
+            String line = sc.next();
+            for (int j = 0; j < C; j++) {
+                char ch = line.charAt(j);
+                if(ch == '#') {
+                    arr[i][j] = -2;
+                }
+                else if(ch == 'F') {
+                    arr[i][j] = -1;
+                    fq.offer(new int[]{i, j});
+                }
+                else if(ch == 'J') {
+                    arr[i][j] = 1;
+                    jq.offer(new int[]{i, j});
+                }
+                else if(ch == '.') {
+                    arr[i][j] = 0;
                 }
             }
         }
 
-        int answer = 0;
-        while (true) {
-            answer++;
+        bfs(fq, jq);
+    }
+
+    private static void bfs(Queue<int[]> fq, Queue<int[]> jq) {
+        int answer = 1;
+
+        while(true) {
             int fs = fq.size();
-            while (fs-- > 0) {
-                Node node = fq.poll();
-                int y = node.y;
-                int x = node.x;
+            while(fs-- > 0) {
+                int[] now = fq.poll();
                 for (int i = 0; i < 4; i++) {
-                    if (x + dx[i] >= 0 && x + dx[i] < c && y + dy[i] > 0 && y + dy[i] < r) {
-                        if (map[y + dy[i]][x + dx[i]] >= 0) {
-                            fq.add(new Node(y + dy[i], x + dx[i]));
-                            map[y + dy[i]][x + dx[i]] = -2;
-                        }
+                    int nx = now[0] + dx[i];
+                    int ny = now[1] + dy[i];
+                    if(nx >= 0 && nx < R && ny >=0 && ny < C && arr[nx][ny] >= 0) {
+                        fq.offer(new int[]{nx, ny});
+                        arr[nx][ny] = -1;
                     }
                 }
             }
 
             int js = jq.size();
-            while (js-- > 0) {
-                Node node = jq.poll();
-                int y = node.y;
-                int x = node.x;
-
+            while(js-- > 0) {
+                int[] now = jq.poll();
                 for (int i = 0; i < 4; i++) {
-                    if (x + dx[i] < 0 || x + dx[i] >= c || y + dy[i] < 0 || y + dy[i] >= r) {
+                    int nx = now[0] + dx[i];
+                    int ny = now[1] + dy[i];
+
+                    if(nx < 0 || nx >= R || ny < 0 || ny >= C) {
                         System.out.println(answer);
                         return;
                     }
 
-                    if (map[y + dy[i]][x + dx[i]] == 0) {
-                        jq.add(new Node(y + dy[i], x + dx[i]));
-                        map[y + dy[i]][x + dx[i]] = 1;
+                    if(arr[nx][ny] == 0) {
+                        jq.offer(new int[]{nx, ny});
+                        arr[nx][ny] = 1;
                     }
                 }
             }
 
-            if (jq.isEmpty()) {
+            if(jq.isEmpty()) {
                 System.out.println("IMPOSSIBLE");
                 return;
             }
+
+            answer++;
         }
     }
 }
